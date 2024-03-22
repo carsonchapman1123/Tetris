@@ -446,7 +446,7 @@ class Game(object):
         """
         Begins a new game after a game over.
         """
-        if self.state_machine.get_state() == "game_over":
+        if self.state_machine.state == "game_over":
             self.delete_blocks(self.active_blocks)
             self.delete_blocks(self.inactive_blocks)
             self.canvas.delete(self.game_over_message)
