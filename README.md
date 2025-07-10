@@ -1,6 +1,6 @@
 # Tetris
 
-This is a basic Tetris implementation using the Tkinter module. It can be run using the following commands:
+This is a basic Tetris implementation done in Python using the Tkinter module. It can be run using the following commands:
 
 ```bash
 git clone https://github.com/carsonchapman1123/Tetris
@@ -17,4 +17,6 @@ Pause: P\
 Reset after losing: R
 
 
+### Gameplay
+Below is a screenshot of this Tetris game following a loss. The right side of the screen contains the piece queue.
 ![Model](https://github.com/carsonchapman1123/Tetris/blob/main/tetris.png)
