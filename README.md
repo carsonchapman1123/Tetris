@@ -14,6 +14,8 @@ You might need to use pip to install required modules if you do not have them in
 poetry shell
 ```
 
+in order to enter a virtual environment with the required modules installed.
+
 ### Controls
 Move piece left/right: left/right arrow keys or A/D\
 Rotate piece: up arrow key or W\
