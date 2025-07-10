@@ -1,5 +1,7 @@
 # Tetris
 
+![Model](https://github.com/carsonchapman1123/Tetris/blob/main/tetris.png)
+
 This is a basic Tetris implementation using the Tkinter module. It can be run using the following commands:
 
 ```bash
