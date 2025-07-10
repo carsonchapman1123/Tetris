@@ -8,7 +8,7 @@ cd Tetris
 python tetris.py
 ```
 
-## Controls
+### Controls
 Move piece left/right: left/right arrow keys or A/D
 Rotate piece: up arrow key or W
 Move down faster: down arrow key or S
