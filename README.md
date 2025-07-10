@@ -8,6 +8,12 @@ cd Tetris
 python tetris.py
 ```
 
+You might need to use pip to install required modules if you do not have them installed. Alternatively if you have poetry installed, you could run
+
+```bash
+poetry shell
+```
+
 ### Controls
 Move piece left/right: left/right arrow keys or A/D\
 Rotate piece: up arrow key or W\
@@ -19,4 +25,5 @@ Reset after losing: R
 
 ### Gameplay
 Below is a screenshot of this Tetris game following a loss. The right side of the screen contains the piece queue.
+
 ![Model](https://github.com/carsonchapman1123/Tetris/blob/main/tetris.png)
