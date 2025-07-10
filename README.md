@@ -9,11 +9,11 @@ python tetris.py
 ```
 
 ### Controls
-Move piece left/right: left/right arrow keys or A/D
-Rotate piece: up arrow key or W
-Move down faster: down arrow key or S
-Move piece all the way down: space bar
-Pause: P
+Move piece left/right: left/right arrow keys or A/D\
+Rotate piece: up arrow key or W\
+Move down faster: down arrow key or S\
+Move piece all the way down: space bar\
+Pause: P\
 Reset after losing: R
 
 
