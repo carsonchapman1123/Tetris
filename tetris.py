@@ -34,7 +34,7 @@ GAP_BETWEEN_QUEUE_PIECES = 1  # The gap between shapes in the queue
 GHOST_BLOCK_BORDER_WIDTH = 2  # The width of the border of ghost blocks
 
 
-class Block(object):
+class Block:
     def __init__(self, canvas, x, y, color, ghost_block=False):
         self.canvas = canvas
         self.x = x
@@ -96,7 +96,7 @@ class StateMachine:
             self.state = state
 
 
-class Game(object):
+class Game:
     def __init__(self, main):
         self.main = main
         self.canvas = tkinter.Canvas(main, width=WIDTH, height=HEIGHT, bg=BORDER_COLOR)
