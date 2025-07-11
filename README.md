@@ -28,4 +28,4 @@ Reset after losing: R
 ### Gameplay
 Below is a screenshot of this Tetris game following a loss. The right side of the screen contains the piece queue.
 
-![Model](https://github.com/carsonchapman1123/Tetris/blob/main/tetris.png)
+![Model](https://github.com/carsonchapman1123/Tetris/blob/main/images/tetris.png)
