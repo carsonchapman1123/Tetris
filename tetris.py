@@ -393,11 +393,44 @@ class Game(object):
 
     def deactivate_blocks(self) -> None:
         """
-        Turns the current active blocks into inactive blocks.
+        Turns the current active blocks into inactive blocks if they are in collision.
+        First we find all blocks that are in collision with the floor or an inactive block,
+        keep track of their indices, and add the coordinates above, left, and right of those
+        blocks to a queue of coordinates to check. We then process that queue and search for any
+        other active blocks above, below, left, or right of any other active blocks we find in
+        collision. Finally, we deactivate the blocks that we found to be in collision.
+
+        The algorithm is a bit complex with the current implementation, but it is required in
+        order to handle cases where a falling shape is made up of two separate clusters of blocks
+        that are not in collision with eachother.
         """
-        for b in self.active_blocks:
-            self.inactive_blocks.append(b)
-        self.active_blocks = []
+        indices_in_collision = []
+        coordinates_to_check = []
+        for i in range(len(self.active_blocks)):
+            b = self.active_blocks[i]
+            x = b.x
+            y = b.y
+            if y + 1 == Y_TILES or [x, y + 1] in [[b.x, b.y] for b in self.inactive_blocks]:
+                indices_in_collision.append(i)
+                coordinates_to_check.append([x + 1, y])
+                coordinates_to_check.append([x - 1, y])
+                coordinates_to_check.append([x, y - 1])
+        while len(coordinates_to_check) > 0:
+            x, y = coordinates_to_check.pop(0)
+            for i in range(len(self.active_blocks)):
+                if i not in indices_in_collision:
+                    b = self.active_blocks[i]
+                    if x == b.x and y == b.y:
+                        indices_in_collision.append(i)
+                        coordinates_to_check.append([x + 1, y])
+                        coordinates_to_check.append([x - 1, y])
+                        coordinates_to_check.append([x, y + 1])
+                        coordinates_to_check.append([x, y - 1])
+                        break
+        for i in range(len(self.active_blocks) - 1, -1, -1):
+            if i in indices_in_collision:
+                self.inactive_blocks.append(self.active_blocks[i])
+                del self.active_blocks[i]
         self.state_machine.set_state("clearing_rows")
         self.update_ghost_blocks()
 
