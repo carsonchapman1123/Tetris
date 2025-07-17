@@ -8,13 +8,7 @@ cd Tetris
 python tetris.py
 ```
 
-You might need to use pip to install required modules if you do not have them installed. Alternatively if you have poetry installed, you could run
-
-```bash
-poetry shell
-```
-
-in order to enter a virtual environment with the required modules installed.
+You might need to use pip to install required modules if you do not have them installed.
 
 ### Controls
 Move piece left/right: left/right arrow keys or A/D\

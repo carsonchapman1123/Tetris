@@ -28,7 +28,7 @@ WIDTH = (
 HEIGHT = (
     Y_TILES + TOP_BORDER_WIDTH + BOTTOM_BORDER_WIDTH
 ) * TILE_WIDTH  # The height of the window in pixels
-FRAMES_PER_SECOND = 5  # The number of frames and board updates per second
+FRAMES_PER_SECOND = 3  # The number of frames and board updates per second
 QUEUE_LENGTH = 3  # The length of the queue
 GAP_BETWEEN_QUEUE_PIECES = 1  # The gap between shapes in the queue
 GHOST_BLOCK_BORDER_WIDTH = 2  # The width of the border of ghost blocks
