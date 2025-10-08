@@ -2,37 +2,37 @@ import random
 import tkinter
 
 # GLOBAL CONSTANTS
-X_TILES = 10  # The number of tiles in the x direction of the Tetris board
-Y_TILES = 20  # The number of tiles in the y direction of the Tetris board
-TILE_WIDTH = 33  # The width of each tile in pixels
-GHOST_BLOCK_WIDTH = TILE_WIDTH - 2  # The width of a ghost tile in pixels
-LEFT_BORDER_WIDTH = 1  # Border width on the left side of the board
-RIGHT_BORDER_WIDTH = 12  # The width of the border on the right side of the board
-TOP_BORDER_WIDTH = 3  # The height of the border on the top of the board
-BOTTOM_BORDER_WIDTH = 1  # The height of the border on the bottom of the board
-MIDDLE_GAP = 1  # Width of the gap between the game board and scoreboard/queue
-RIGHT_GAP = 1  # Height of the gap between the scoreboard and the queue
-SCORE_WIDTH = 10  # The width of the scoreboard in tiles
-SCORE_HEIGHT = 2  # The height of the scoreboard in tiles
-QUEUE_WIDTH = 10  # The width of the queue in tiles
-QUEUE_HEIGHT = Y_TILES - SCORE_HEIGHT - 1  # The height of the queue in tiles
-BG_COLOR = "black"  # The background color for the Tetris board, scoreboard, and queue
-BORDER_COLOR = "gray"  # The color of the borders around the Tetris board
+X_TILES = 10  # The number of tiles in the x direction of the Tetris board.
+Y_TILES = 20  # The number of tiles in the y direction of the Tetris board.
+TILE_WIDTH = 33  # The width of each tile in pixels.
+GHOST_BLOCK_WIDTH = TILE_WIDTH - 2  # The width of a ghost tile in pixels.
+LEFT_BORDER_WIDTH = 1  # Border width on the left side of the board.
+RIGHT_BORDER_WIDTH = 12  # The width of the border on the right side of the board.
+TOP_BORDER_WIDTH = 3  # The height of the border on the top of the board.
+BOTTOM_BORDER_WIDTH = 1  # The height of the border on the bottom of the board.
+MIDDLE_GAP = 1  # Width of the gap between the game board and scoreboard/queue.
+RIGHT_GAP = 1  # Height of the gap between the scoreboard and the queue.
+SCORE_WIDTH = 10  # The width of the scoreboard in tiles.
+SCORE_HEIGHT = 2  # The height of the scoreboard in tiles.
+QUEUE_WIDTH = 10  # The width of the queue in tiles.
+QUEUE_HEIGHT = Y_TILES - SCORE_HEIGHT - 1  # The height of the queue in tiles.
+BG_COLOR = "black"  # The background color for the Tetris board, scoreboard, and queue.
+BORDER_COLOR = "gray"  # The color of the borders around the Tetris board.
 GRID_COLOR = "gray"  # The color of the grid on the Tetris board.
-SCORE_COLOR = "gray"  # The color of the score
-GAME_OVER_COLOR = "white"  # The color of the game over message
-CENTER = X_TILES / 2 - 1  # The center of the game board
+SCORE_COLOR = "gray"  # The color of the score.
+GAME_OVER_COLOR = "white"  # The color of the game over message.
+CENTER = X_TILES / 2 - 1  # The center of the game board.
 WIDTH = (
     X_TILES + RIGHT_BORDER_WIDTH + LEFT_BORDER_WIDTH
-) * TILE_WIDTH  # The width of the window in pixels
+) * TILE_WIDTH  # The width of the window in pixels.
 HEIGHT = (
     Y_TILES + TOP_BORDER_WIDTH + BOTTOM_BORDER_WIDTH
-) * TILE_WIDTH  # The height of the window in pixels
-FRAMES_PER_SECOND = 3  # The number of frames and board updates per second
-QUEUE_LENGTH = 3  # The length of the queue
-GAP_BETWEEN_QUEUE_PIECES = 1  # The gap between shapes in the queue
-GHOST_BLOCK_BORDER_WIDTH = 2  # The width of the border of ghost blocks
-LOGO_TILE_WIDTH = 14
+) * TILE_WIDTH  # The height of the window in pixels.
+FRAMES_PER_SECOND = 3  # The number of frames and board updates per second.
+QUEUE_LENGTH = 3  # The length of the queue.
+GAP_BETWEEN_QUEUE_PIECES = 1  # The gap between shapes in the queue.
+GHOST_BLOCK_BORDER_WIDTH = 2  # The width of the border of ghost blocks.
+LOGO_TILE_WIDTH = 14  # The width of each tile in the Tetris logo.
 
 
 class Block:
@@ -62,20 +62,35 @@ class Block:
             )
 
     def move(self, dx: int, dy: int) -> None:
+        """
+        Moves the block by dx in the x direction and dy in the y direction.
+        """
         self.x += dx
         self.y += dy
         self.canvas.move(self.shape, dx * TILE_WIDTH, dy * TILE_WIDTH)
 
     def move_down(self) -> None:
+        """
+        Moves the block down by one in the y direction.
+        """
         self.move(0, 1)
 
     def move_left(self) -> None:
+        """
+        Moves the block left by one in the x direction.
+        """
         self.move(-1, 0)
 
     def move_right(self) -> None:
+        """
+        Moves the block right by one in the y direction.
+        """
         self.move(1, 0)
 
     def delete(self) -> None:
+        """
+        Deletes the block from the canvas.
+        """
         self.canvas.delete(self.shape)
 
 
@@ -107,7 +122,7 @@ class Game:
         self.main = main
         self.canvas = tkinter.Canvas(main, width=WIDTH, height=HEIGHT, bg=BORDER_COLOR)
 
-        # Create Tetris board
+        # Create Tetris board.
         self.game_area = self.canvas.create_rectangle(
             LEFT_BORDER_WIDTH * TILE_WIDTH,
             TOP_BORDER_WIDTH * TILE_WIDTH,
@@ -116,7 +131,7 @@ class Game:
             fill=BG_COLOR,
         )
 
-        # Create horizontal lines on Tetris board
+        # Create horizontal lines on Tetris board.
         for i in range(1, Y_TILES):
             self.canvas.create_line(
                 LEFT_BORDER_WIDTH * TILE_WIDTH,
@@ -126,7 +141,7 @@ class Game:
                 fill=GRID_COLOR,
             )
 
-        # Create vertical lines on Tetris board
+        # Create vertical lines on Tetris board.
         for i in range(1, X_TILES):
             self.canvas.create_line(
                 LEFT_BORDER_WIDTH * TILE_WIDTH + i * TILE_WIDTH,
@@ -136,7 +151,7 @@ class Game:
                 fill=GRID_COLOR,
             )
 
-        # Create scoreboard
+        # Create scoreboard.
         self.canvas.create_rectangle(
             (LEFT_BORDER_WIDTH + X_TILES + MIDDLE_GAP) * TILE_WIDTH,
             TOP_BORDER_WIDTH * TILE_WIDTH,
@@ -144,8 +159,8 @@ class Game:
             (TOP_BORDER_WIDTH + SCORE_HEIGHT) * TILE_WIDTH,
             fill=BG_COLOR,
         )
-        
-        # Create queue area
+
+        # Create queue area.
         self.canvas.create_rectangle(
             (LEFT_BORDER_WIDTH + X_TILES + MIDDLE_GAP) * TILE_WIDTH,
             (TOP_BORDER_WIDTH + SCORE_HEIGHT + RIGHT_GAP) * TILE_WIDTH,
@@ -156,7 +171,7 @@ class Game:
 
         self.state_machine = StateMachine()
 
-        # Connect keyboard input
+        # Connect keyboard input.
         self.canvas.focus_set()
         self.canvas.bind("<Right>", lambda event: self.move_shape_right())
         self.canvas.bind("<Up>", lambda event: self.rotate())
@@ -170,7 +185,7 @@ class Game:
         self.canvas.bind("<p>", lambda event: self.toggle_pause())
         self.canvas.bind("<r>", lambda event: self.reset())
 
-        # Shapes and their corresponding colors and rotation points
+        # Shapes and their corresponding colors and rotation points.
         shape0 = [[1, 0], [0, 1], [1, 1], [2, 1]]
         shape1 = [[2, 0], [0, 1], [1, 1], [2, 1]]
         shape2 = [[0, 0], [0, 1], [1, 1], [2, 1]]
@@ -179,13 +194,13 @@ class Game:
         shape5 = [[0, 0], [0, 1], [1, 0], [1, 1]]
         shape6 = [[1, 0], [1, 1], [0, 1], [0, 2]]
         self.shapes = [shape0, shape1, shape2, shape3, shape4, shape5, shape6]
-        rotation_point0 = [CENTER + 1, 1]
-        rotation_point1 = [CENTER + 1, 1]
-        rotation_point2 = [CENTER + 1, 1]
-        rotation_point3 = [CENTER - 0.5, 1.5]
-        rotation_point4 = [CENTER + 0, 1]
-        rotation_point5 = [CENTER + 0.5, 0.5]
-        rotation_point6 = [CENTER + 1, 1]
+        rotation_point0 = [1, 1]
+        rotation_point1 = [1, 1]
+        rotation_point2 = [1, 1]
+        rotation_point3 = [-0.5, 1.5]
+        rotation_point4 = [0, 1]
+        rotation_point5 = [0.5, 0.5]
+        rotation_point6 = [1, 1]
         self.rotation_points = [
             rotation_point0,
             rotation_point1,
@@ -203,11 +218,11 @@ class Game:
 
         self.shape_queue_blocks = []
 
-        # A list containing the blocks in the active moving shape
+        # A list containing the blocks in the active moving shape.
         self.active_blocks = []
         self.rotation_point = None
 
-        # The ghost blocks showing where the current active blocks will fall
+        # The ghost blocks showing where the current active blocks will fall.
         self.ghost_blocks = []
 
         self.inactive_blocks = []
@@ -219,10 +234,9 @@ class Game:
         self.pause_message = None
         self.draw_score_message()
 
-        # Pixel art of logo
         self.draw_logo()
 
-        # Initiate game loop
+        # Initiate game loop.
         self.canvas.pack()
         self.game_loop()
 
@@ -330,13 +344,13 @@ class Game:
             while self.can_move_down(self.ghost_blocks):
                 for b in self.ghost_blocks:
                     b.move_down()
-            # Raise active blocks to the top of the canvas stack so that they appear on top of the ghost blocks
+            # Raise active blocks to the top of the canvas stack so that they appear on top of the ghost blocks.
             for b in self.active_blocks:
                 self.canvas.tag_raise(b.shape)
 
     def undo_rotate(self) -> None:
         """
-        Undoes a rotation
+        Undoes a rotation.
         """
         for b in self.active_blocks:
             dx = self.rotation_point[0] - b.x
@@ -345,52 +359,59 @@ class Game:
 
     def rotate(self) -> None:
         """
-        Rotates the active shape by 90 degrees purely mathematically.
+        Rotates the active shape by 90 degrees using the rotation matrix formula.
         If the rotation causes a collision with inactivate blocks or
         a side wall, it will attempt to move the shape left or right
         by one tile if possible otherwise the rotation will not occur.
         """
         if self.state_machine.state == "shape_moving":
-            # Rotate blocks into new position
+            # Rotate blocks into new position.
             for b in self.active_blocks:
                 dx = self.rotation_point[0] - b.x
                 dy = self.rotation_point[1] - b.y
                 b.move(dx + dy, dy - dx)
-            # If any of the blocks are colliding with walls in their new position, see if they can be shifted 1 left or right
+            # If any of the blocks are colliding with walls in their new position, see if they can be shifted 1 left or right.
             for b in self.active_blocks:
-                # Check floor for collision, if there is collision undo the rotation since it is invalid:
+                # Check floor for collision, if there is collision undo the rotation since it is invalid.
                 if b.y == Y_TILES:
                     self.undo_rotate()
                     return
-                # Check left and right walls for collision
+                # Check left and right walls for collision.
                 if b.x == -1 and self.can_move_right():
                     self.move_shape_right()
                 elif b.x == X_TILES and self.can_move_left():
                     self.move_shape_left()
-                # Check inactive blocks for collision
+                # Check inactive blocks for collision.
                 for i in self.inactive_blocks:
                     if b.x == i.x and b.y == i.y:
                         if self.can_move_left():
                             self.move_shape_left()
                         elif self.can_move_right():
                             self.move_shape_right()
-                        # If the shape can't be rotated by shifting it left or right by 1, then it is invalid so undo it
+                        # If the shape can't be rotated by shifting it left or right by 1, then it is invalid so undo it.
                         else:
                             self.undo_rotate()
                             return
             self.update_ghost_blocks()
 
     def spawn_shape(self) -> None:
+        """
+        Spawns the next shape in the shape queue on to the game board.
+        """
         rng = self.shape_queue.pop(0)
         shape = self.shapes[rng]
         color = self.colors[rng]
-        self.rotation_point = list(self.rotation_points[rng])
+        rotation_x, rotation_y = self.rotation_points[rng]
+        self.rotation_point = [rotation_x + CENTER, rotation_y]
         for x, y in shape:
             self.active_blocks.append(Block(self.canvas, x + CENTER, y, color))
         self.shape_queue.append(random.randint(0, len(self.shapes) - 1))
         self.draw_shape_queue()
 
     def draw_shape_queue(self) -> None:
+        """
+        Draws the shapes in the shape queue onto the shape queue.
+        """
         for b in self.shape_queue_blocks:
             b.delete()
         self.shape_queue_blocks = []
@@ -406,7 +427,9 @@ class Game:
             current_y += GAP_BETWEEN_QUEUE_PIECES + max([y for _, y in shape]) + 1
 
     def draw_logo(self) -> None:
-        # Pixel art of logo
+        """
+        Uses pixel art of the Tetris logo to draw the logo at the top of the screen.
+        """
         logo = [
             "XXXXXOXXXXOXXXXXOXXXXOXOXXXX",
             "OOXOOOXOOOOOOXOOOXOOXOXOXOOO",
@@ -418,8 +441,10 @@ class Game:
         height = len(logo)
         total_logo_width = LOGO_TILE_WIDTH * width
         total_logo_height = LOGO_TILE_WIDTH * height
-        logo_x = (WIDTH - total_logo_width) // 2 # Top left x coordinate of logo
-        logo_y = (TOP_BORDER_WIDTH * TILE_WIDTH - total_logo_height) // 2 # Top left y coordinate of logo
+        logo_x = (WIDTH - total_logo_width) // 2  # Top left x coordinate of logo
+        logo_y = (
+            TOP_BORDER_WIDTH * TILE_WIDTH - total_logo_height
+        ) // 2  # Top left y coordinate of logo
         for i in range(height):
             for j in range(width):
                 if logo[i][j] == "X":
@@ -435,6 +460,7 @@ class Game:
     def deactivate_blocks(self) -> None:
         """
         Turns the current active blocks into inactive blocks if they are in collision.
+
         First we find all blocks that are in collision with the floor or an inactive block,
         keep track of their indices, and add the coordinates above, left, and right of those
         blocks to a queue of coordinates to check. We then process that queue and search for any
