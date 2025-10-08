@@ -32,6 +32,7 @@ FRAMES_PER_SECOND = 3  # The number of frames and board updates per second
 QUEUE_LENGTH = 3  # The length of the queue
 GAP_BETWEEN_QUEUE_PIECES = 1  # The gap between shapes in the queue
 GHOST_BLOCK_BORDER_WIDTH = 2  # The width of the border of ghost blocks
+LOGO_TILE_WIDTH = 14
 
 
 class Block:
@@ -91,15 +92,21 @@ class StateMachine:
         self.previous_state = None
 
     def set_state(self, state: str) -> None:
+        """
+        Updates the current state and previous state.
+        """
         if state in self.states:
             self.previous_state = self.state
             self.state = state
+        else:
+            print("Warning! Attempted to set an invalid state.")
 
 
 class Game:
     def __init__(self, main):
         self.main = main
         self.canvas = tkinter.Canvas(main, width=WIDTH, height=HEIGHT, bg=BORDER_COLOR)
+
         # Create Tetris board
         self.game_area = self.canvas.create_rectangle(
             LEFT_BORDER_WIDTH * TILE_WIDTH,
@@ -108,6 +115,7 @@ class Game:
             TOP_BORDER_WIDTH * TILE_WIDTH + Y_TILES * TILE_WIDTH,
             fill=BG_COLOR,
         )
+
         # Create horizontal lines on Tetris board
         for i in range(1, Y_TILES):
             self.canvas.create_line(
@@ -117,6 +125,7 @@ class Game:
                 TOP_BORDER_WIDTH * TILE_WIDTH + i * TILE_WIDTH,
                 fill=GRID_COLOR,
             )
+
         # Create vertical lines on Tetris board
         for i in range(1, X_TILES):
             self.canvas.create_line(
@@ -126,6 +135,7 @@ class Game:
                 TOP_BORDER_WIDTH * TILE_WIDTH + Y_TILES * TILE_WIDTH,
                 fill=GRID_COLOR,
             )
+
         # Create scoreboard
         self.canvas.create_rectangle(
             (LEFT_BORDER_WIDTH + X_TILES + MIDDLE_GAP) * TILE_WIDTH,
@@ -134,6 +144,7 @@ class Game:
             (TOP_BORDER_WIDTH + SCORE_HEIGHT) * TILE_WIDTH,
             fill=BG_COLOR,
         )
+        
         # Create queue area
         self.canvas.create_rectangle(
             (LEFT_BORDER_WIDTH + X_TILES + MIDDLE_GAP) * TILE_WIDTH,
@@ -207,6 +218,9 @@ class Game:
         self.game_over_message = None
         self.pause_message = None
         self.draw_score_message()
+
+        # Pixel art of logo
+        self.draw_logo()
 
         # Initiate game loop
         self.canvas.pack()
@@ -390,6 +404,33 @@ class Game:
                     Block(self.canvas, queue_x + x, current_y + y, color)
                 )
             current_y += GAP_BETWEEN_QUEUE_PIECES + max([y for _, y in shape]) + 1
+
+    def draw_logo(self) -> None:
+        # Pixel art of logo
+        logo = [
+            "XXXXXOXXXXOXXXXXOXXXXOXOXXXX",
+            "OOXOOOXOOOOOOXOOOXOOXOXOXOOO",
+            "OOXOOOXXXXOOOXOOOXXXXOXOXXXX",
+            "OOXOOOXOOOOOOXOOOXOXOOXOOOOX",
+            "OOXOOOXXXXOOOXOOOXOOXOXOXXXX",
+        ]
+        width = len(logo[0])
+        height = len(logo)
+        total_logo_width = LOGO_TILE_WIDTH * width
+        total_logo_height = LOGO_TILE_WIDTH * height
+        logo_x = (WIDTH - total_logo_width) // 2 # Top left x coordinate of logo
+        logo_y = (TOP_BORDER_WIDTH * TILE_WIDTH - total_logo_height) // 2 # Top left y coordinate of logo
+        for i in range(height):
+            for j in range(width):
+                if logo[i][j] == "X":
+                    self.canvas.create_rectangle(
+                        logo_x + j * LOGO_TILE_WIDTH,
+                        logo_y + i * LOGO_TILE_WIDTH,
+                        logo_x + (j + 1) * LOGO_TILE_WIDTH,
+                        logo_y + (i + 1) * LOGO_TILE_WIDTH,
+                        fill=random.choice(self.colors),
+                        outline=GRID_COLOR,
+                    )
 
     def deactivate_blocks(self) -> None:
         """
