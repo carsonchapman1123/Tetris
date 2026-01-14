@@ -34,3 +34,10 @@ A state machine handles different behaviors in the game, such as `spawn_shape`, 
 Rotation of the blocks is handled by a rotation point for each type of block, which is the (x, y) coordinate that the shape will rotate about using the rotation matrix formula.
 
 Most of the game's variables are defined in constants at the top of `tetris.py`. These variables can be changed to update the size of the game window as well as other features described in comments next to each variable. Some variables will need to be edited simultaneously in order for things to look correct on the screen, for example the title tile width will need to shrink if the game window is shrunken to the point where the logo will block the score or gameplay window.
+
+### What I would add if given more time
+- Code cleanup: type hints, docstrings for each function, moving certain code into individual functions.
+- CI/CD pipeline
+- Graphics upgrade: use more beautiful blocks, create a nicer game board, upgrade logo.
+- Improved game flow: when the application starts have a main menu with ability to launch game, change settings, and exit the application.
+- Improved score system: research the real Tetris scoring system and implement something similar.
