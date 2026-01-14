@@ -41,7 +41,7 @@ class Block:
         self.x = x
         self.y = y
         self.color = color
-        if ghost_block is False:
+        if not ghost_block:
             self.shape = self.canvas.create_rectangle(
                 (x + LEFT_BORDER_WIDTH) * TILE_WIDTH,
                 (y + TOP_BORDER_WIDTH) * TILE_WIDTH,
@@ -430,6 +430,7 @@ class Game:
         """
         Uses pixel art of the Tetris logo to draw the logo at the top of the screen.
         """
+        # The logo variable is pixel art of the logo.
         logo = [
             "XXXXXOXXXXOXXXXXOXXXXOXOXXXX",
             "OOXOOOXOOOOOOXOOOXOOXOXOXOOO",
@@ -441,10 +442,10 @@ class Game:
         height = len(logo)
         total_logo_width = LOGO_TILE_WIDTH * width
         total_logo_height = LOGO_TILE_WIDTH * height
-        logo_x = (WIDTH - total_logo_width) // 2  # Top left x coordinate of logo
+        logo_x = (WIDTH - total_logo_width) // 2  # Top left x coordinate of logo.
         logo_y = (
             TOP_BORDER_WIDTH * TILE_WIDTH - total_logo_height
-        ) // 2  # Top left y coordinate of logo
+        ) // 2  # Top left y coordinate of logo.
         for i in range(height):
             for j in range(width):
                 if logo[i][j] == "X":
@@ -504,6 +505,9 @@ class Game:
         self.update_ghost_blocks()
 
     def delete_blocks(self, blocks) -> None:
+        """
+        Deletes all blocks from the canvas.
+        """
         num_blocks = len(blocks)
         for i in range(num_blocks):
             this_block = blocks[num_blocks - 1 - i]
@@ -630,6 +634,10 @@ class Game:
         self.canvas.itemconfigure(self.score_message, text=self.get_score_text())
 
     def game_loop(self):
+        """
+        The game loop which executes logic each game tick
+        depending on the current state of the StateMachine.
+        """
         if self.state_machine.state == "shape_moving":
             self.move_shape_down()
         elif self.state_machine.state == "clearing_rows":
